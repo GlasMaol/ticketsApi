@@ -39,17 +39,25 @@ const events = [
 //query ex. for this code: /events/1?tickets=3
 
 exports.handler = async (event) => {
+
+  //hämtar id från pathParameters
 const { id } = event.pathParameters;
+
+  //hämtar antal tickets från query parametern
 const { tickets } = event.queryStringParameters || {};
 
+  //hittar eventet med matchande id
 const eventItem = events.find(e => e.id === parseInt(id));
 
+  //hittas inte eventet skickas en 404
 if(!eventItem) {
   return sendResponse(404, { message: 'Event not found.' })
 }
 
+  //Bestämmer antal efterfrågade tickets och inget anges är default 1 ticket
 const numTickets = parseInt(tickets) || 1;
 
+  //genererar tickets med random fyrsiffrig nummer mellan 1000 och 9000
 const generatedTickets = Array.from({ length: numTickets }, () => {
   return {
     ticketNumber: Math.floor(1000 + Math.random() * 9000),
@@ -57,5 +65,6 @@ const generatedTickets = Array.from({ length: numTickets }, () => {
   }
 })
 
+  //returnerar eventet och beställda tickets
   return sendResponse(200, { event: eventItem, tickets: generatedTickets });
 };
