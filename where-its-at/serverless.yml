@@ -25,3 +25,10 @@ functions:
       - httpApi:
           path: /events/{id}
           method: get
+
+  PostEvent:
+    handler: functions/PostEvent/index.handler
+    events:
+      - httpApi:
+          path: /events
+          method: post
