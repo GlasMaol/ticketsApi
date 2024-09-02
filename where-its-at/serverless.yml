@@ -12,9 +12,16 @@ provider:
   deploymentMethod: direct
 
 functions:
-  hello:
-    handler: handler.hello
+  GetEvents:
+    handler: functions/GetEvents/index.handler
     events:
       - httpApi:
-          path: /
+          path: /events
+          method: get
+
+  GetTickets:
+    handler: functions/GetTickets/index.handler
+    events:
+      - httpApi:
+          path: /events/{id}
           method: get
